@@ -1,0 +1,13 @@
+train: C:\Users\Viet\Documents\GitHub\21Vision\object_detection\train
+val: C:\Users\Viet\Documents\GitHub\21Vision\object_detection\valid
+test: C:\Users\Viet\Documents\GitHub\21Vision\object_detection\test
+
+nc: 52
+names: ['C10', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'CA', 'CJ', 'CK', 'CQ', 'H10', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'HA', 'HJ', 'HK', 'HQ', 'R10', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'RA', 'RJ', 'RK', 'RQ', 'S10', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'SA', 'SJ', 'SK', 'SQ']
+
+roboflow:
+  workspace: sunny-zvt11
+  project: poker-1bpf4
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/sunny-zvt11/poker-1bpf4/dataset/1
