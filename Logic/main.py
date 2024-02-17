@@ -1,3 +1,5 @@
+import random
+
 # this file will be used for counting cards and making decisions 
 class Card:
   def __init__(self, rank, suit):
@@ -8,7 +10,18 @@ class Card:
     return self.rank == other.rank and self.suit == other.suit
   
   def __str__(self):
-    return f"{self.rank} of {self.suit}"
+    print_suit = self.suit
+    match print_suit:
+      case "H":
+        print_suit = "hearts"
+      case "C":
+        print_suit = "clubs"
+      case "D":
+        print_suit = "diamonds"
+      case default:
+        print_suit = "spades"
+
+    return f"{suit_dict[self.rank]} of {print_suit}"
 
 # GLOBAL VARIABLES
 init_deck = ['2H','3H','4H','5H','6H','7H','8H','9H','10H','JH','QH','KH','AH',
@@ -17,6 +30,8 @@ init_deck = ['2H','3H','4H','5H','6H','7H','8H','9H','10H','JH','QH','KH','AH',
     '2S','3S','4S','5S','6S','7S','8S','9S','10S','JS','QS','KS','AS']
 rank_dict = {"A": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, 
               "9": 9, "10": 10, "J": 11,"Q": 12, "K": 13}
+suit_dict = {1:"Ace", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 
+              9: "9", 10: "10", 11: "Jack", 12: "Queen", 13: "King"}
 high_low_rank = {
   2: 1,
   3: 1,
@@ -37,6 +52,7 @@ def generate_deck():
   cards = []
   for card in init_deck:
     cards.append(convert_to_card(card))
+  random.shuffle(cards)
   return cards
 
 def convert_to_card(card):
