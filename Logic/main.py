@@ -84,6 +84,10 @@ def play_game(deck, running_count):
       return
   
 
+def get_statistic():
+  print("hi")
+
+
 def run_hand(deck, running_count):
   player_hand = []
   dealer_hand = []
@@ -93,11 +97,12 @@ def run_hand(deck, running_count):
   dealer_hand.append(deck[3])
   deck = deck[4:]
 
-  player_hand = [Card(8, "H"), Card(1, "S")]
+  player_hand = [Card(1, "H"), Card(1, "S")]
 
   print_hands(player_hand, dealer_hand)
   print()
   options = get_options(player_hand)
+  # display_statistics = get_statistic()
   player_input = input(f"Would you like to {', '.join(options[:-1])}, or {options[-1]}? ")
 
   return deck, running_count
@@ -124,19 +129,22 @@ def check_blackjack(hand):
 
 
 def calc_value(hand):
-    possible_values = [0]
-
+    total = 0
+    num_aces = 0
     for card in hand:
-        new_values = []
-        for value in possible_values:
-            if card.rank == 1:
-                new_values.extend([value + 1, value + 11])
-            else:
-              new_values.append(value + card.get_game_value())
-
-        possible_values = new_values
-
-    return possible_values
+      if card.rank == 1:
+        num_aces += 1
+    for card in hand:
+      if card.rank == 1:
+        total += 11
+      else:
+        total += card.get_game_value()
+    
+    if total > 21 and num_aces > 0:
+      for i in range(num_aces):
+        if total > 21:
+          total -= 10
+    return total
 
 def get_options(hand):
   options = ["hit", "stand", "double"]
