@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-model = YOLO("bestest_20k.pt")
+model = YOLO("./object_detection/bestest_20k.pt")
 
 results = model.predict(source="0", show=True)
 
