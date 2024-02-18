@@ -72,15 +72,16 @@ def convert_to_card(card):
 
 def initalize_game():
   deck = generate_deck()
-
   running_count = 0
-
   return deck, running_count
 
 def play_game(deck, running_count):
   print()
-  while True:
+  while len(deck) > 0:
     deck, running_count = run_hand(deck, running_count)
+    next_input = input("would you like to play another hand? (y/n) ")
+    if next_input.lower() != "y":
+      return
   
 
 def run_hand(deck, running_count):
@@ -92,35 +93,50 @@ def run_hand(deck, running_count):
   dealer_hand.append(deck[3])
   deck = deck[4:]
 
-  print("Your hand:")
-  print_hand(player_hand)
-  print(f"You have {calc_value(player_hand)}")
-  print()
-  print("Dealer hand:")
-  for card in dealer_hand:
-    if card == dealer_hand[0]:
-      print("hidden")
-      continue
-    print(card)
-  print(f"Dealer has {calc_value(dealer_hand[1:])}")
+  player_hand = [Card(8, "H"), Card(1, "S")]
+
+  print_hands(player_hand, dealer_hand)
   print()
   options = get_options(player_hand)
   player_input = input(f"Would you like to {', '.join(options[:-1])}, or {options[-1]}? ")
-  if player_input.lower() == "hit":
-    player_hand.append(deck[0])
-    print_hand(player_hand)
-    second_input = input("would you like to hit, stand or kys? ")
+
   return deck, running_count
 
-def print_hand(hand):
-  for card in hand:
+def print_hands(player_hand, dealer_hand):
+  print("Your hand:")
+  for card in player_hand:
     print(card)
+  print(f"You have {calc_value(player_hand)}")
+
+  if (check_blackjack(player_hand)):
+    print("Blackjack!")
+    # possibly return true if blackjack
+    # return deck,running_count
+  print()
+  print("Dealer hand:")
+  for card in dealer_hand:
+    print(card)
+  print(f"Dealer has {calc_value(dealer_hand)}")
+
+  
+def check_blackjack(hand):
+  return calc_value(hand) == 21
+
 
 def calc_value(hand):
-  total = 0
-  for card in hand:
-    total += card.rank
-  return total
+    possible_values = [0]
+
+    for card in hand:
+        new_values = []
+        for value in possible_values:
+            if card.rank == 1:
+                new_values.extend([value + 1, value + 11])
+            else:
+              new_values.append(value + card.get_game_value())
+
+        possible_values = new_values
+
+    return possible_values
 
 def get_options(hand):
   options = ["hit", "stand", "double"]
