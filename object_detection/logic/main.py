@@ -178,10 +178,20 @@ def update_running_count(running_count, cards):
     return running_count
 
 
-def run_hand(deck, running_count, player_hand, dealer_hand):
-    deck = deck[4:]
+def run_hand(deck, running_count, player_hand_input, dealer_hand_input):
+    player_hand = []
+    dealer_hand = []
+
+    for card in player_hand_input:
+        player_hand.append(convert_to_card(card))
+
+    for card in dealer_hand_input:
+        dealer_hand.append(convert_to_card(card))
+
+
     print(player_hand)
     print(dealer_hand)
+    deck = deck[4:]
     # player_hand = [Card(1, "H"), Card(1, "S")]
 
 
