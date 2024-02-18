@@ -2,7 +2,7 @@ from ultralytics import YOLO
 from logic.main import main as run_logic
 import cv2
 
-model = YOLO(".\\object_detection\\best_20k.pt")
+model = YOLO(".\\object_detection\\bestest_20k.pt")
 camera = cv2.VideoCapture(0)
 img_counter = 0
 run = True

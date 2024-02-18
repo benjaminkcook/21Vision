@@ -7,7 +7,7 @@ from logic.main import (
 )
 import cv2
 
-model = YOLO(".\\object_detection\\best_20k.pt")
+model = YOLO(".\\object_detection\\bestest_20k.pt")
 
 cap = cv2.VideoCapture(0)
 
