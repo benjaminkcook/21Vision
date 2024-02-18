@@ -28,7 +28,7 @@ while True:
             names = [result.names[key] for key in detect_objects]
             cards = set(names)
 
-    cv2.imshow("Object Detection", frame)
+    cv2.imshow("21 Vision", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
