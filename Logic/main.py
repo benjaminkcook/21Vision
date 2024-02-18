@@ -82,10 +82,21 @@ def play_game(deck, running_count):
     next_input = input("would you like to play another hand? (y/n) ")
     if next_input.lower() != "y":
       return
-  
 
-def get_statistic():
-  print("hi")
+
+def update_running_count(running_count, cards):
+  for card in cards:
+    if card.rank in high_low_rank:
+      running_count += high_low_rank[card.rank]
+
+  if running_count < 0:
+    print("Running count is negative, you might want to play it safe")
+  elif running_count > 0:
+    print("Running count is positive, you might want to take some risks")
+  else:
+    print("Running count is 0, go crazy")
+    
+  return running_count
 
 
 def run_hand(deck, running_count):
@@ -97,21 +108,50 @@ def run_hand(deck, running_count):
   dealer_hand.append(deck[3])
   deck = deck[4:]
 
-  player_hand = [Card(1, "H"), Card(1, "S")]
+  # player_hand = [Card(1, "H"), Card(1, "S")]
 
-  print_hands(player_hand, dealer_hand)
-  print()
+  print_hands(player_hand, dealer_hand, running_count)
+
   options = get_options(player_hand)
-  # display_statistics = get_statistic()
-  player_input = input(f"Would you like to {', '.join(options[:-1])}, or {options[-1]}? ")
+  
+  bust = False
+  while not bust:
+    player_input = input(f"Would you like to {', '.join(options[:-1])}, or {options[-1]}? ")
+    if player_input == "hit":
+      player_hand.append(deck[0])
+      deck = deck[1:]
+      bust = print_hands(player_hand, dealer_hand, running_count)
+      if bust:
+        return deck, running_count
 
+    elif (player_input == "stand"):
+      # Implement dealer logic here
+      pass
+    elif (player_input == "double"):
+      # Similar logic to "hit", but only take one card and then send to dealer
+      # pass logic onto dealer
+      bust = True # to break out of loop
+      player_hand.append(deck[0])
+      deck = deck[1:]
+
+      pass
+    else:
+      # split
+      print("hi")
+      pass
+  
   return deck, running_count
 
-def print_hands(player_hand, dealer_hand):
+# Returns true if player goes over 21
+def print_hands(player_hand, dealer_hand, running_count):
+  bust = False
+  print()
   print("Your hand:")
   for card in player_hand:
     print(card)
   print(f"You have {calc_value(player_hand)}")
+
+    
 
   if (check_blackjack(player_hand)):
     print("Blackjack!")
@@ -119,9 +159,21 @@ def print_hands(player_hand, dealer_hand):
     # return deck,running_count
   print()
   print("Dealer hand:")
-  for card in dealer_hand:
+  print("hidden")
+  for card in dealer_hand[-1:]:
     print(card)
-  print(f"Dealer has {calc_value(dealer_hand)}")
+  print(f"Dealer has {calc_value(dealer_hand[-1:])}")
+  print()
+
+  running_count = update_running_count(running_count, player_hand+dealer_hand[-1:])
+  print(f"Running count: {running_count}")
+  
+  if (calc_value(player_hand) > 21):
+    print()
+    print("you busted!")
+    bust = True
+  return bust
+
 
   
 def check_blackjack(hand):
