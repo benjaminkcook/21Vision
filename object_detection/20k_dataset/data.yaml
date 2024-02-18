@@ -1,4 +1,4 @@
-path: ../object_detection/large_dataset
+path: ../object_detection/20k_dataset
 
 train: train/images
 val: valid/images
