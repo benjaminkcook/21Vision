@@ -154,10 +154,10 @@ def initalize_game():
     return deck, running_count
 
 
-def play_game(deck, running_count):
+def play_game(deck, running_count, player_hand, dealer_hand):
     print()
     while len(deck) > 0:
-        deck, running_count = run_hand(deck, running_count)
+        deck, running_count = run_hand(deck, running_count, player_hand, dealer_hand)
         next_input = input("would you like to play another hand? (y/n) ")
         if next_input.lower() != "y":
             return
@@ -178,16 +178,13 @@ def update_running_count(running_count, cards):
     return running_count
 
 
-def run_hand(deck, running_count):
-    player_hand = []
-    dealer_hand = []
-    player_hand.append(deck[0])
-    dealer_hand.append(deck[1])
-    player_hand.append(deck[2])
-    dealer_hand.append(deck[3])
+def run_hand(deck, running_count, player_hand, dealer_hand):
+    player_hand = (convert_to_card(card) for card in player_hand)
+    dealer_hand = (convert_to_card(card) for card in dealer_hand)
     deck = deck[4:]
 
     # player_hand = [Card(1, "H"), Card(1, "S")]
+
 
     print_hands(player_hand, dealer_hand, running_count)
 
@@ -286,9 +283,9 @@ def get_options(hand):
     return options
 
 
-def main():
+def main(player_hand, dealer_hand):
     deck, running_count = initalize_game()
-    play_game(deck, running_count)
+    play_game(deck, running_count, player_hand=player_hand, dealer_hand=dealer_hand)
 
 
 if __name__ == "__main__":

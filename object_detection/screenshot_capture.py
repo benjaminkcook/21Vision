@@ -1,9 +1,11 @@
 from ultralytics import YOLO
+from logic.main import main as run_logic
 import cv2
 
 model = YOLO(".\\object_detection\\best_20k.pt")
 camera = cv2.VideoCapture(0)
 img_counter = 0
+run = True
 
 
 """
@@ -11,7 +13,8 @@ Sourced from stackoverflow :D
 
 https://stackoverflow.com/questions/75925797/how-do-i-work-with-the-result-of-model-predict-in-yolov8
 """
-while True:
+
+while run:
     ret, frame = camera.read()
 
     if not ret:
@@ -52,7 +55,12 @@ while True:
                     cv2.imwrite(img_path, image)
 
                     names = [result.names[key] for key in detect_objects]
-                    cards = set(names)
+                    if img_counter == 2:
+                        dealer_hand = set(names)
+                        run = False
+                        break
+                    else:
+                        player_hand = set(names)
 
-    cv2.imshow("21 Vision", frame)
 camera.release()
+run_logic(list(player_hand), list(dealer_hand))
