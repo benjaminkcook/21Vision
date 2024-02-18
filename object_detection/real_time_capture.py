@@ -75,7 +75,7 @@ while True:
             (10, frame.shape[0] - 10),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
-            (4, 2, 0),
+            (0, 255, 0),
             2,
         )
     elif standing and not dealer_bust:
@@ -85,7 +85,7 @@ while True:
             (10, frame.shape[0] - 10),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
-            (4, 2, 0),
+            (0, 255, 0),
             2,
         )
 
