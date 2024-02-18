@@ -36,7 +36,7 @@ while True:
                 y = int(pos_list[0, 1])
                 w = int(pos_list[0, 2])
                 h = int(pos_list[0, 3])
-                color = (0, 255, 0)
+                color = (0, 230, 255)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
                 label = f"Class {result.names[detect_objects[i]]}, Confidence: {confidence}"
                 cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
