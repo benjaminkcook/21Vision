@@ -61,6 +61,8 @@ while run:
                         break
                     else:
                         player_hand = set(names)
-
+                        
+                        
+    cv2.imshow("21 Vision", frame)                
 camera.release()
 run_logic(list(player_hand), list(dealer_hand))

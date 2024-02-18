@@ -182,7 +182,8 @@ def run_hand(deck, running_count, player_hand, dealer_hand):
     player_hand = (convert_to_card(card) for card in player_hand)
     dealer_hand = (convert_to_card(card) for card in dealer_hand)
     deck = deck[4:]
-
+    print(player_hand)
+    print(dealer_hand)
     # player_hand = [Card(1, "H"), Card(1, "S")]
 
 
