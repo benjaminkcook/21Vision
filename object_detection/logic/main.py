@@ -162,6 +162,19 @@ def play_game(deck, running_count, player_hand, dealer_hand):
         if next_input.lower() != "y":
             return
 
+
+def generate_deck_and_dealer_hand():
+    deck = generate_deck()
+    cards_remaining = 10
+    dealer_hand = []
+    while cards_remaining > 0:
+        dealer_hand.append(deck[cards_remaining])
+        cards_remaining -= 1
+    deck = deck[10:]
+
+    return deck, dealer_hand, False
+
+
 def get_current_running_count(current_cards):
     cards = []
     for card in current_cards:
@@ -186,6 +199,17 @@ def update_running_count(running_count, cards):
     return running_count
 
 
+def on_hit(player_hand, dealer_hand, deck, running_count, run=True):
+    if run:
+        player_hand.append(deck[0])
+        deck = deck[1:]
+        bust = print_hands(player_hand, dealer_hand, running_count)
+        if bust:
+            return deck, running_count
+    else:
+        pass
+
+
 def run_hand(deck, running_count, player_hand_input, dealer_hand_input):
     player_hand = []
     dealer_hand = []
@@ -196,12 +220,8 @@ def run_hand(deck, running_count, player_hand_input, dealer_hand_input):
     for card in dealer_hand_input:
         dealer_hand.append(convert_to_card(card))
 
-
-    print(player_hand)
-    print(dealer_hand)
     deck = deck[4:]
     # player_hand = [Card(1, "H"), Card(1, "S")]
-
 
     print_hands(player_hand, dealer_hand, running_count)
 
@@ -213,11 +233,7 @@ def run_hand(deck, running_count, player_hand_input, dealer_hand_input):
             f"Would you like to {', '.join(options[:-1])}, or {options[-1]}? "
         )
         if player_input == "hit":
-            player_hand.append(deck[0])
-            deck = deck[1:]
-            bust = print_hands(player_hand, dealer_hand, running_count)
-            if bust:
-                return deck, running_count
+            on_hit(player_hand, dealer_hand, deck, running_count, run=True)
 
         elif player_input == "stand":
             # Implement dealer logic here

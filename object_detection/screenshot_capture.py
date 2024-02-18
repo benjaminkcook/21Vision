@@ -22,17 +22,17 @@ while run:
         break
 
     k = cv2.waitKey(1)
-    if k%256 == 27:
+    if k % 256 == 27:
         # ESC pressed
         print("Escape hit, closing...")
         break
-    elif k%256 == 32:
+    elif k % 256 == 32:
         # SPACE pressed
         img_path = "opencv_frame_{}.png".format(img_counter)
         cv2.imwrite(img_path, frame)
         outs = model.predict(img_path)
         img_counter += 1
-        
+
         image = cv2.imread(img_path)
 
         for result in outs:
@@ -51,7 +51,15 @@ while run:
                     color = (0, 255, 0)
                     cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
                     label = f"Class {result.names[detect_objects[i]]}, Confidence: {confidence}"
-                    cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                    cv2.putText(
+                        image,
+                        label,
+                        (x, y - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5,
+                        color,
+                        2,
+                    )
                     cv2.imwrite(img_path, image)
 
                     names = [result.names[key] for key in detect_objects]
@@ -61,8 +69,7 @@ while run:
                         break
                     else:
                         player_hand = set(names)
-                        
-                        
-    cv2.imshow("21 Vision", frame)                
+
+    cv2.imshow("21 Vision", frame)
 camera.release()
 run_logic(list(player_hand), list(dealer_hand))
