@@ -28,10 +28,9 @@ while True:
             names = [result.names[key] for key in detect_objects]
             cards = set(names)
 
-
     cv2.imshow("Object Detection", frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()
