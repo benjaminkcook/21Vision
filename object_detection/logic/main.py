@@ -162,6 +162,14 @@ def play_game(deck, running_count, player_hand, dealer_hand):
         if next_input.lower() != "y":
             return
 
+def get_current_running_count(current_cards):
+    cards = []
+    for card in current_cards:
+        cards.append(convert_to_card(card))
+    running_count = 0
+    running_count = update_running_count(running_count, cards)
+    return running_count
+
 
 def update_running_count(running_count, cards):
     for card in cards:
